@@ -28,8 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -155,9 +153,7 @@ private fun MapsScreen(
                 Marker(
                     state = MarkerState(position = LatLng(position.lat, position.lon)),
                     icon = bitmapDescriptorFromVector(
-                        context,
-                        if (isDarkMode) R.drawable.ic_vehicle_dark
-                        else R.drawable.ic_vehicle_light
+                        context, R.drawable.ic_vehicle
                     )
                 )
             }
