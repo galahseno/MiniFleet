@@ -47,6 +47,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.core.splashscreen)
 
     // Coil
     implementation(libs.coil.compose)
@@ -61,9 +62,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     // Koin
     implementation(libs.bundles.koin.compose)
-
-    // Location
-    implementation(libs.google.android.gms.play.services.location)
 
     // Timber
     implementation(libs.timber)
@@ -84,8 +82,4 @@ dependencies {
     implementation(projects.dashboard.data)
     implementation(projects.dashboard.domain)
     implementation(projects.dashboard.presentation)
-
-    implementation(projects.alerts.data)
-    implementation(projects.alerts.domain)
-    implementation(projects.alerts.presentation)
 }

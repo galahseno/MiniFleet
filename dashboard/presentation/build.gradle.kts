@@ -9,4 +9,5 @@ android {
 dependencies {
     implementation(projects.dashboard.domain)
     implementation(projects.core.domain)
+    implementation(projects.core.presentation.ui)
 }

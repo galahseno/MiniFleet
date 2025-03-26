@@ -12,6 +12,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+    implementation(libs.bundles.koin)
+
     implementation(projects.core.domain)
     implementation(projects.core.presentation.designSystem)
 }

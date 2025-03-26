@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="invalid_credential">Invalid credentials</string>
+    <string name="error_process">Something wrong</string>
+</resources>

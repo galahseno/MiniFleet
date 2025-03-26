@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="speed_alert_title">Speed Alert</string>
+    <string name="door_alert_title">Door Alert</string>
+    <string name="engine_alert_title">Engine Alert</string>
+    <string name="alert_speed">Speed alert : %d km/h</string>
+    <string name="alert_door_moving">Door open while moving!</string>
+    <string name="alert_engine_on">Engine started</string>
+    <string name="alert_engine_off">Engine stopped</string>
+</resources>

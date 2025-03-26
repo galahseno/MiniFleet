@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.MiniFleet" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.MiniFleet.splash" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_icon</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/white</item>
+        <item name="postSplashScreenTheme">@style/Theme.MiniFleet</item>
+    </style>
 </resources>

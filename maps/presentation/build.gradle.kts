@@ -8,14 +8,16 @@ android {
     namespace = "id.dev.maps.presentation"
 
     defaultConfig {
-//        val mapApiKey = gradleLocalProperties(rootDir, providers).getProperty("MAPS_API_KEY")
-//
-//        manifestPlaceholders += mapOf("MAPS_API_KEY" to mapApiKey)
+        val mapApiKey = gradleLocalProperties(rootDir, providers).getProperty("MAPS_API_KEY")
+
+        manifestPlaceholders += mapOf("MAPS_API_KEY" to mapApiKey)
     }
 }
 
 dependencies {
     implementation(libs.google.maps.android.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.google.android.gms.play.services.location)
     implementation(libs.coil.compose)
 
     implementation(projects.core.domain)
