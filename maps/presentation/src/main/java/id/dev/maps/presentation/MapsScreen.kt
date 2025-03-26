@@ -2,6 +2,7 @@ package id.dev.maps.presentation
 
 import android.Manifest
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
@@ -26,10 +27,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,6 +73,7 @@ fun MapsScreenRoot(
             is TrackingEvent.Error -> {
                 Toast.makeText(context, event.message.asString(context), Toast.LENGTH_SHORT).show()
             }
+
             else -> Unit
         }
     }
@@ -91,6 +96,11 @@ private fun MapsScreen(
     onAction: (TrackingAction) -> Unit
 ) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    val isDarkMode = remember(configuration) {
+        configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    }
+
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -102,14 +112,16 @@ private fun MapsScreen(
         }
     }
 
-
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(-2.2436434, 113.096937), 3.4f)
     }
-    val mapStyle = rememberSaveable {
-        MapStyleOptions.loadRawResourceStyle(
-            context,
-            R.raw.maps_light_style
+    val mapProperties = remember(isDarkMode) {
+        MapProperties(
+            mapStyleOptions = MapStyleOptions.loadRawResourceStyle(
+                context,
+                if (isDarkMode) R.raw.maps_dark_style else R.raw.maps_light_style
+            ),
+            isBuildingEnabled = true
         )
     }
 
@@ -137,14 +149,16 @@ private fun MapsScreen(
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
-            properties = MapProperties(
-                mapStyleOptions = mapStyle
-            )
+            properties = mapProperties,
         ) {
             state.vehicleDomain?.position?.let { position ->
                 Marker(
                     state = MarkerState(position = LatLng(position.lat, position.lon)),
-                    icon = bitmapDescriptorFromVector(context, R.drawable.ic_vehicle)
+                    icon = bitmapDescriptorFromVector(
+                        context,
+                        if (isDarkMode) R.drawable.ic_vehicle_dark
+                        else R.drawable.ic_vehicle_light
+                    )
                 )
             }
         }
@@ -177,9 +191,11 @@ private fun MapsScreen(
                                 else TrackingAction.OnStartClick
                             )
                         }
+
                         context.shouldShowNotificationRationale() -> {
                             onAction(TrackingAction.OnShowRationaleAlert)
                         }
+
                         else -> {
                             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                         }
